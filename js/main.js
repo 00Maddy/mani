@@ -10,27 +10,27 @@
         }, 1);
     };
     spinner(0);
-    
-    
+
+
     // Initiate the wowjs
     new WOW().init();
 
 
 
-   // testimonial carousel
-   $(".testimonial-carousel").owlCarousel({
-    autoplay: true,
-    items: 1,
-    smartSpeed: 1500,
-    dots: true,
-    dotsData: true,
-    loop: true,
-    margin: 25,
-    nav : true,
-    navText : [
-        '<i class="bi bi-arrow-left"></i>',
-        '<i class="bi bi-arrow-right"></i>'
-    ]
+    // testimonial carousel
+    $(".testimonial-carousel").owlCarousel({
+        autoplay: true,
+        items: 1,
+        smartSpeed: 1500,
+        dots: true,
+        dotsData: true,
+        loop: true,
+        margin: 25,
+        nav: true,
+        navText: [
+            '<i class="bi bi-arrow-left"></i>',
+            '<i class="bi bi-arrow-right"></i>'
+        ]
     });
 
 
@@ -41,16 +41,16 @@
     });
 
 
-   // Back to top button
-   $(window).scroll(function () {
-    if ($(this).scrollTop() > 300) {
-        $('.back-to-top').fadeIn('slow');
-    } else {
-        $('.back-to-top').fadeOut('slow');
-    }
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
 
@@ -58,37 +58,54 @@
 })(jQuery);
 
 //
-$(document).ready(function() {
-			$('#send').on('click', function() {
-				let nameInput=$('#name').val();
-				let mail=$('#email').val();
-				let subject=$('#subject').val();
-				let message=$('#message').val();
-				console.log(message,nameInput,mail,subject);
-				let mailVerify = /^\S+@\S+\.\S+$/.test(mail);
-				if(!mailVerify || mail==''){
-				return	alert('Mail not Valid')
-				}
-				else if(nameInput==''){
-				return	alert('Name Input not Valid')
-				}else if(subject==''){
-				return	alert('Subject Input not Valid')
-				}else if(message==''){
-				return	alert('Message Input not Valid')
-				}
-				Email.send({
-					Host : "smtp.elasticemail.com",
-					Username : "adam.dev.ai7@gmail.com",
-					Password : "C78CAA2526F818EB407F780F40572F41DF60",
-					To : 'maniasn3535@gmail.com',
-					From : "maniasn3535@gmail.com",
-					Subject : `${subject }-${mail}`||'test txt',
-					Body :message||'working'
-				}).then(
-				  message => alert("Mail Sent Successfully !")
-				);
-			});
-		}); 
+$(document).ready(function () {
+    $('#send').on('click', function () {
+        event.preventDefault();
+        let nameInput = $('#name').val();
+        let mail = $('#email').val();
+        let phone = $('#phone').val(); // Assuming there's an input field with id 'phone'
+        let subject = $('#subject').val();
+        let message = $('#message').val();
+        console.log(message, nameInput, mail, phone, subject);
+
+        let mailVerify = /^\S+@\S+\.\S+$/.test(mail);
+        if (!mailVerify || mail == '') {
+            alert('Mail not Valid');
+            return;
+        } else if (nameInput == '') {
+            alert('Name Input not Valid');
+            return;
+        } else if (phone == '') {
+            alert('Phone Input not Valid');
+            return;
+        } else if (subject == '') {
+            alert('Subject Input not Valid');
+            return;
+        } else if (message == '') {
+            alert('Message Input not Valid');
+            return;
+        }
+        let emailBody = `
+            Name: ${nameInput}<br>
+            Email: ${mail}<br>
+            Phone: ${phone}<br>
+            Subject: ${subject}<br>
+            Message: ${message}
+        `;
+        Email.send({
+            Host: "smtp.elasticemail.com", ///smtp.elasticemail.com
+            Username: "maniasn3535@gmail.com",
+            Password: "C9E80E978A3ADAE1429E5DA6F17C0A2DE0ED",
+            To: 'maniasn3535@gmail.com',
+            From: "maniasn3535@gmail.com",
+            Subject: `${subject}-${nameInput}` || 'test txt',
+            Body: emailBody || 'working'
+        }).then(
+            message => alert("Mail Sent Successfully!"),
+            error => alert("Mail Sending Failed: " + error)
+        );
+    });
+});
 
 // wow
 
